@@ -137,7 +137,7 @@ class Collection extends LaravelCollection
 
     /**
      * @inheritDoc
-     * @phpstan-ignore method.childReturnType
+     * @phpstan-ignore selfOut.type, method.childReturnType
      */
     #[Override]
     public function transform(callable $callback): void
