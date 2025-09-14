@@ -3,6 +3,7 @@
 declare(strict_types=1);
 use Bag\Casts\DateTime;
 use Bag\Collection;
+use Bag\Values\Optional;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Carbon\Exceptions\InvalidFormatException;
@@ -136,4 +137,12 @@ test('it is nullable', function () {
 
     expect($datetime)->toBeNull()
         ->and($cast->get('test', collect(['test' => null])))->toBeNull();
+});
+
+test('it can be optional', function () {
+    $cast = new DateTime();
+
+    $datetime = $cast->set(Collection::wrap([CarbonImmutable::class, 'null']), 'test', collect(['test' => new Optional()]));
+
+    expect($datetime)->toBeInstanceOf(Optional::class);
 });

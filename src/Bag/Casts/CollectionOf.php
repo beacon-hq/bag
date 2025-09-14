@@ -9,6 +9,7 @@ use Bag\Collection;
 use Bag\Exceptions\BagNotFoundException;
 use Bag\Exceptions\InvalidBag;
 use Bag\Exceptions\InvalidCollection;
+use Bag\Values\Optional;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection as LaravelCollection;
 use Override;
@@ -44,7 +45,12 @@ class CollectionOf implements CastsPropertySet
             throw new InvalidCollection(sprintf('The property "%s" must be a subclass of %s', $propertyName, LaravelCollection::class));
         }
 
-        return $propertyType::make($properties->get($propertyName))->map(function (mixed $item) {
+        $value = $properties->get($propertyName);
+        if ($value instanceof Optional) {
+            return $value;
+        }
+
+        return $propertyType::make($value)->map(function (mixed $item) {
             if ($item instanceof Bag && $item::class === $this->valueClassname) {
                 return clone $item;
             }

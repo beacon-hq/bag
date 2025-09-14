@@ -7,6 +7,7 @@ namespace Bag\Casts;
 use BackedEnum;
 use Bag\Bag;
 use Bag\Collection;
+use Bag\Values\Optional;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use DateTimeImmutable;
@@ -19,12 +20,16 @@ use UnitEnum;
 class MagicCast implements CastsPropertySet
 {
     /**
-     * @param Collection<string> $propertyTypes
+     * @param Collection<string|Optional> $propertyTypes
      */
     #[Override]
     public function set(Collection $propertyTypes, string $propertyName, LaravelCollection $properties): mixed
     {
         $value = $properties->get($propertyName);
+
+        if ($value instanceof Optional) {
+            return $value;
+        }
 
         // Find the correct type for the property
         $valueType = get_debug_type($value);

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 use Bag\Casts\MoneyFromMinor;
 use Bag\Collection;
+use Bag\Values\Optional;
 use Brick\Money\Exception\UnknownCurrencyException;
 use Brick\Money\Money;
 use Laravel\SerializableClosure\Support\ReflectionClosure;
@@ -90,4 +91,14 @@ test('it formats output', function () {
 
     $cast = new MoneyFromMinor(currency: CurrencyAlpha3::US_Dollar, locale: 'en_GB');
     expect($cast->get('test', collect(['test' => Money::of(100, 'USD')])))->toBe('US$100.00');
+});
+
+test('it can be optional', function () {
+    $cast = new MoneyFromMinor(currency: CurrencyAlpha3::US_Dollar);
+
+    $type = Collection::wrap((new ReflectionClosure(fn (MoneyFromMinor $type) => true))->getParameters()[0]->getType());
+
+    $money =  $cast->set($type, 'test', collect(['test' => new Optional()]));
+
+    expect($money)->toBeInstanceOf(Optional::class);
 });
