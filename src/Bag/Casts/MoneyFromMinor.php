@@ -6,6 +6,7 @@ namespace Bag\Casts;
 
 use BackedEnum;
 use Bag\Collection;
+use Bag\Values\Optional;
 use Brick\Math\BigNumber;
 use Brick\Money\Exception\UnknownCurrencyException;
 use Brick\Money\Money as BrickMoney;
@@ -25,6 +26,10 @@ class MoneyFromMinor implements CastsPropertySet, CastsPropertyGet
     {
         /** @var BigNumber|float|int|string $amount */
         $amount = $properties->get($propertyName);
+
+        if ($amount instanceof Optional) {
+            return $amount;
+        }
 
         if ($amount instanceof BrickMoney) {
             return $amount;

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Bag\Casts;
 
 use Bag\Collection;
+use Bag\Values\Optional;
 use Carbon\Exceptions\InvalidFormatException;
 use DateMalformedStringException;
 use DateTimeImmutable;
@@ -40,13 +41,17 @@ class DateTime implements CastsPropertyGet, CastsPropertySet
     /**
      * @param Collection<ReflectionNamedType> $propertyTypes
      * @param LaravelCollection<array-key,mixed> $properties
-     * @return T|null
+     * @return T|Optional|null
      * @throws DateMalformedStringException
      */
     #[Override]
     public function set(Collection $propertyTypes, string $propertyName, LaravelCollection $properties): mixed
     {
         $value = $properties->get($propertyName);
+
+        if ($value instanceof Optional) {
+            return $value;
+        }
 
         if ($propertyTypes->contains('null') && $value === null) {
             return null;

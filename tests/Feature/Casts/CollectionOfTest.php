@@ -3,9 +3,11 @@
 declare(strict_types=1);
 
 use Bag\Casts\CollectionOf;
+use Bag\Values\Optional;
 use Tests\Fixtures\Collections\BagWithCollectionCollection;
 use Tests\Fixtures\Values\BagWithCustomCollectionOf;
 use Tests\Fixtures\Values\BagWithLaravelCollectionOf;
+use Tests\Fixtures\Values\BagWithOptionalCollection;
 use Tests\Fixtures\Values\TestBag;
 
 covers(CollectionOf::class);
@@ -46,4 +48,10 @@ test('it creates custom collection of bags', function () {
     ]);
 
     expect($bag->bags)->toBeInstanceOf(BagWithCollectionCollection::class)->toContainOnlyInstancesOf(TestBag::class);
+});
+
+test('it handles optionals', function () {
+    $bag = BagWithOptionalCollection::from([]);
+
+    expect($bag->bags)->toBeInstanceOf(Optional::class);
 });

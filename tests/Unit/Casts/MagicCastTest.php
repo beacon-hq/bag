@@ -1,8 +1,10 @@
 <?php
 
 declare(strict_types=1);
+
 use Bag\Casts\MagicCast;
 use Bag\Collection;
+use Bag\Values\Optional;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Model;
@@ -163,4 +165,12 @@ test('it casts model IDs to models', function () {
 
     expect($result)->toBeInstanceOf($model::class)
         ->and($result->id)->toBe(1);
+});
+
+test('it can be optional', function () {
+    $cast = new MagicCast();
+
+    $datetime = $cast->set(Collection::wrap(['string']), 'test', collect(['test' => new Optional()]));
+
+    expect($datetime)->toBeInstanceOf(Optional::class);
 });
