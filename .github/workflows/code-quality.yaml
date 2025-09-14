@@ -23,8 +23,7 @@ jobs:
       - name: Setup PHP with Xdebug
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
-          coverage: xdebug
+          php-version: '8.4'
 
       - name: Install dependencies with composer
         run: composer install --no-ansi --no-interaction --no-progress && composer require barryvdh/laravel-debugbar spatie/laravel-typescript-transformer --dev
@@ -51,11 +50,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup PHP with Xdebug
+      - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
-          coverage: xdebug
+          php-version: '8.4'
 
       - name: Install dependencies with composer
         run: composer install --no-ansi --no-interaction --no-progress && composer require barryvdh/laravel-debugbar spatie/laravel-typescript-transformer --dev
