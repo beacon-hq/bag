@@ -8,7 +8,6 @@ use Bag\Attributes\StripExtraParameters;
 use Bag\Attributes\WithoutValidation;
 use Bag\Console\Commands\MakeBagCommand;
 use Bag\DebugBar\Collectors\BagCollector;
-use Bag\Internal\Cache;
 use Bag\Internal\Reflection;
 use Barryvdh\Debugbar\LaravelDebugbar;
 use Closure;
@@ -33,7 +32,7 @@ class BagServiceProvider extends ServiceProvider
 
             $app->bind(
                 $class,
-                fn () => Cache::remember('request', $class, function () use ($class): Bag {
+                function () use ($class): Bag {
                     /** @var Request $request */
                     $request = $this->app->get('request');
 
@@ -78,7 +77,7 @@ class BagServiceProvider extends ServiceProvider
 
 
                     return $class::from($values);
-                })
+                }
             );
         });
 
