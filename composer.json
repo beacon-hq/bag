@@ -1,7 +1,10 @@
 {
-    "name": "dshafik/bag",
+    "name": "beacon-hq/bag",
     "description": "A comprehensive immutable value objects implementation",
     "type": "library",
+    "replace": {
+        "dshafik/bag": "self.version"
+    },
     "require": {
         "php": "^8.2|^8.3|^8.4",
         "brick/money": "^0.8.1 || ^0.9.0 || ^0.10.0",
