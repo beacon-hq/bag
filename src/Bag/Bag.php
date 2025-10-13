@@ -8,7 +8,6 @@ use Bag\Concerns\WithArrayable;
 use Bag\Concerns\WithCollections;
 use Bag\Concerns\WithEloquentCasting;
 use Bag\Concerns\WithJson;
-use Bag\Concerns\WithMemoization;
 use Bag\Concerns\WithOptionals;
 use Bag\Concerns\WithOutput;
 use Bag\Concerns\WithValidation;
@@ -35,7 +34,6 @@ readonly class Bag implements Arrayable, Jsonable, JsonSerializable, Castable
     use WithOptionals;
     use WithOutput;
     use WithValidation;
-    use WithMemoization;
 
     public const FROM_JSON = 'json';
 

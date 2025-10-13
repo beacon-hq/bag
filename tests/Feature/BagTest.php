@@ -11,7 +11,6 @@ use Tests\Fixtures\Values\BagWithMappingAndOptional;
 use Tests\Fixtures\Values\BagWithOptionals;
 use Tests\Fixtures\Values\BagWithSingleArrayParameter;
 use Tests\Fixtures\Values\BagWithUnionTypes;
-use Tests\Fixtures\Values\MemoizedBag;
 use Tests\Fixtures\Values\NullablePropertiesBag;
 use Tests\Fixtures\Values\NullableWithDefaultValueBag;
 use Tests\Fixtures\Values\OptionalPropertiesWithDefaultsBag;
@@ -385,51 +384,4 @@ test('it handles mapping and optionals', function () {
     expect($bag->toArray())->toBe([
         'name' => 'Davey Shafik',
     ]);
-});
-
-it('memoizes using key name', function () {
-    $bag = TestBag::memoizeUsing('email', ['name' => 'Davey Shafik', 'age' => 40, 'email' => 'davey@php.net']);
-    $bag2 = TestBag::memoizeUsing('email', ['name' => 'Not Davey', 'age' => 40, 'email' => 'davey@php.net']);
-    $bag3 = TestBag::memoizeUsing('email', ['name' => 'Not Davey', 'age' => 40, 'email' => 'not-davey@php.net']);
-
-    expect($bag)
-        ->toBe($bag2)
-        ->not->toBe($bag3);
-});
-
-it('memoizes using array of keys', function () {
-    $bag = TestBag::memoizeUsing(['email', 'age'], ['name' => 'Davey Shafik', 'age' => 40, 'email' => 'davey@php.net']);
-    $bag2 = TestBag::memoizeUsing(['email', 'age'], ['name' => 'Not Davey', 'age' => 40, 'email' => 'davey@php.net']);
-    $bag3 = TestBag::memoizeUsing(['email', 'age'], ['name' => 'Not Davey', 'age' => 41, 'email' => 'davey@php.net']);
-
-    expect($bag)
-        ->toBe($bag2)
-        ->not->toBe($bag3);
-});
-
-it('does not memoize without key', function () {
-    $bag = TestBag::memoize(['name' => 'Davey Shafik', 'age' => 40, 'email' => 'davey@php.net']);
-    $bag2 = TestBag::memoize(['name' => 'Davey Shafik', 'age' => 40, 'email' => 'davey@php.net']);
-
-    expect($bag)->not->toBe($bag2);
-});
-
-it('memoizes using attribute', function () {
-    $bag = MemoizedBag::memoize(['name' => 'Davey Shafik', 'age' => 40, 'email' => 'davey@php.net']);
-    $bag2 = MemoizedBag::memoize(['name' => 'Not Davey', 'age' => 40, 'email' => 'davey@php.net']);
-    $bag3 = MemoizedBag::memoize(['name' => 'Not Davey', 'age' => 40, 'email' => 'not-davey@php.net']);
-
-    expect($bag)
-        ->toBe($bag2)
-        ->not->toBe($bag3);
-});
-
-it('memoizes overriding attribute', function () {
-    $bag = MemoizedBag::memoizeUsing('name', ['name' => 'Davey Shafik', 'age' => 40, 'email' => 'davey@php.net']);
-    $bag2 = MemoizedBag::memoizeUsing('name', ['name' => 'Davey Shafik', 'age' => 40, 'email' => 'not-davey@php.net']);
-    $bag3 = MemoizedBag::memoizeUsing('name', ['name' => 'Not Davey Shafik', 'age' => 40, 'email' => 'davey@php.net']);
-
-    expect($bag)
-        ->toBe($bag2)
-        ->not->toBe($bag3);
 });
