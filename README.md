@@ -44,7 +44,7 @@ Bag requires PHP 8.3+, and supports Laravel 11.x.
 You can install the package via composer:
 
 ```bash
-composer require dshafik/bag
+composer require beacon-hq/bag
 ```
 
 ## Usage

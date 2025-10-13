@@ -4,10 +4,10 @@ Bag is an open-source project and we welcome contributions. Whether you're fixin
 
 ## Getting Started
 
-To get started, fork the repository and clone it to your local machine. You can find the repository at <https://github.com/dshafik/bag>.
+To get started, fork the repository and clone it to your local machine. You can find the repository at <https://github.com/beacon-hq/bag>.
 
 ```shell
-git clone https://github.com/dshafik/bag.git
+git clone https://github.com/beacon-hq/bag.git
 ```
 
 ## Installation

@@ -11,5 +11,5 @@ Bag requires PHP 8.2+, and supports Laravel 10+.
 To install Bag, use [Composer](https://getcomposer.org):
 
 ```bash
-composer require dshafik/bag
+composer require beacon-hq/bag
 ```

@@ -5,7 +5,7 @@ layout: home
 hero:
   name: "Bag"
   text: "Immutable Value Objects for PHP"
-  tagline: "<code>composer require dshafik/bag</code>"
+  tagline: "<code>composer require beacon-hq/bag</code>"
   image: /assets/images/bag.png
   actions:
     - theme: brand
