@@ -145,3 +145,26 @@ test('it resolves and strips extra paramaters using class method route', functio
         ->and(\Test2::$resolved->toArray())
         ->toBe(['name' => 'Davey Shafik', 'age' => 40, 'email' => 'davey@php.net']);
 });
+
+test('it uses the __invoke method for invokable classes', function () {
+    class TestInvokable
+    {
+        public static TestBag $resolved;
+
+        public function __invoke(TestBag $bag)
+        {
+            static::$resolved = $bag;
+
+            return $bag;
+        }
+    }
+
+    Route::post('/testinvoke', \TestInvokable::class);
+
+    $this->post('/testinvoke', ['name' => 'Davey Shafik', 'age' => 40, 'email' => 'davey@php.net']);
+
+    expect(\TestInvokable::$resolved)
+        ->toBeInstanceOf(TestBag::class)
+        ->and(\TestInvokable::$resolved->toArray())
+        ->toBe(['name' => 'Davey Shafik', 'age' => 40, 'email' => 'davey@php.net']);
+});

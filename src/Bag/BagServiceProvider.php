@@ -45,7 +45,12 @@ class BagServiceProvider extends ServiceProvider
                             $action = new ReflectionClosure($closure);
                         } else {
                             /** @var object|string $controller */
-                            $action = new ReflectionMethod($controller, $route->getActionMethod());
+                            $method = $route->getActionMethod();
+                            $name = is_string($controller) ? $controller : get_class($controller);
+                            if ($method === $name) {
+                                $method = '__invoke';
+                            }
+                            $action = new ReflectionMethod($controller, $method);
                         }
 
                         if (Reflection::getParameters($action)->filter(function ($parameter) use ($class) {
