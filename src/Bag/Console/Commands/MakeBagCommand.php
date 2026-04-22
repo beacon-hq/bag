@@ -198,7 +198,7 @@ class MakeBagCommand extends Command implements PromptsForMissingInput
                         unset($attributes[$key]);
                     }
                 }
-                $class->setAttributes($attributes);
+                $class->setAttributes(array_values($attributes));
             }
 
             $class->addAttribute(FactoryAttribute::class, [new Literal($factory . '::class')]);
@@ -215,7 +215,7 @@ class MakeBagCommand extends Command implements PromptsForMissingInput
                         unset($attributes[$key]);
                     }
                 }
-                $class->setAttributes($attributes);
+                $class->setAttributes(array_values($attributes));
             }
 
             $alias = $this->getCollectionAlias($classNamespace);

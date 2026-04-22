@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Bag\TypeScript\BagTransformer;
 use Bag\TypeScript\Reflection\BagReflectionProperty;
 use Bag\TypeScript\Reflection\BagReflectionUnionType;
+use function Orchestra\Testbench\laravel_version_compare;
 use Spatie\TypeScriptTransformer\TypeScriptTransformerConfig;
 use Tests\Fixtures\Values\TypeScriptBag;
 
@@ -30,4 +31,4 @@ test('it transforms bags to typescript', function () {
         }
         TYPESCRIPT
     );
-});
+})->skip(laravel_version_compare('11.0', '>='));
