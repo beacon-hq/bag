@@ -15,12 +15,17 @@ jobs:
     runs-on: 'ubuntu-latest'
     strategy:
       matrix:
-        php-versions: [ '8.2', '8.3', '8.4' ]
+        php-versions: [ '8.2', '8.3', '8.4', '8.5' ]
         ignore-platform-reqs: [ '--ignore-platform-reqs', '' ]
-        laravel-versions: [ '^10', '^11', '^12' ]
+        typescript: [ 'spatie/laravel-typescript-transformer', '']
+        laravel-versions: [ '^10', '^11', '^12', '^13' ]
         exclude:
           - php-versions: '8.2'
             ignore-platform-reqs: '--ignore-platform-reqs'
+          - php-versions: '8.2'
+            laravel-versions: '^13'
+          - laravel-versions: '^10'
+            typescript: 'spatie/laravel-typescript-transformer'
           - php-versions: '8.3'
             ignore-platform-reqs: '--ignore-platform-reqs'
           - php-versions: '8.4'
@@ -46,7 +51,7 @@ jobs:
         run: 'sed -i -e "s/\"laravel\/framework\": \".*\"/\"laravel\/framework\": \"${{ matrix.laravel-versions }}\"/g" composer.json'
 
       - name: Install dependencies with composer
-        run: composer install --no-ansi --no-interaction --no-progress ${{ matrix.ignore-platform-reqs }} && composer require barryvdh/laravel-debugbar spatie/laravel-typescript-transformer --dev
+        run: composer install --no-ansi --no-interaction --no-progress ${{ matrix.ignore-platform-reqs }} && composer require barryvdh/laravel-debugbar ${{ matrix.typescript }} --dev
 
       - name: Run tests with pest
         run: vendor/bin/pest --parallel --coverage --min=80
