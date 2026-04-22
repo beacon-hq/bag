@@ -28,6 +28,7 @@ class Rule implements AttributeInterface
             return;
         }
 
+        /** @var array<string> $arguments */
         $this->rule = $rule . ':'.\implode(',', $arguments);
     }
 }

@@ -5,11 +5,12 @@ declare(strict_types=1);
 use Bag\DebugBar\Collectors\BagCollector;
 use DebugBar\DataCollector\MessagesCollector;
 use Illuminate\Support\Facades\Config;
+use function Orchestra\Testbench\laravel_version_compare;
 use Tests\Fixtures\Values\TestBag;
 
 beforeEach(function () {
     BagCollector::init();
-})->skip(!class_exists(MessagesCollector::class));
+})->skip(!class_exists(MessagesCollector::class) || laravel_version_compare('11.0', '>='));
 
 if (class_exists(MessagesCollector::class)) {
     covers(BagCollector::class);
